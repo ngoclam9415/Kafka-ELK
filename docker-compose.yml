@@ -24,6 +24,26 @@ services:
     networks:
       - elk
 
+  timescale:
+    image: timescale/timescaledb:latest-pg12
+    ports:
+      - "5432:5432"
+    volumes:
+      - type: bind
+        source: ./timescale/data
+        target: /var/lib/postgresql/data
+    environment: 
+      POSTGRES_PASSWORD: password
+    networks: 
+      - elk
+
+  pgadmin:
+    image: thajeztah/pgadmin4
+    ports: 
+      - "5050:5050"
+    networks: 
+      - elk
+
   elasticsearch:
     build:
       context: elasticsearch/
